@@ -150,7 +150,7 @@ table td .badge{
     display: flex;
     flex-direction: row;
     width: 100%;
-    gap: 10px;
+    gap: 20px;
     flex-wrap: wrap;
   }
 

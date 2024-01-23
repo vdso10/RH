@@ -3,22 +3,20 @@ import './dashboard.css';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../contexts/auth';
 import { db } from '../../services/firebaseConnection';
-import { collection,
+import { 
+  collection,
+  doc,
   getDocs,
   query,
   orderBy,
   limit,
-  startAfter,  
-  sum,
-  getAggregateFromServer,
-  getCountFromServer,
-  where
+  startAfter,    
 } from 'firebase/firestore'
 
 import Header from '../../components/Header';
 import Title from '../../components/Title';
 import Modal from '../../components/Modal';
-import {format, differenceInDays} from 'date-fns'
+import {format} from 'date-fns'
 
 import { Link } from 'react-router-dom';
 
@@ -41,6 +39,7 @@ export default function Dashboard(){
   const [detail, setDetail] = useState();
 
   const titulo = 'Quantidade de Funcionarios X Empresas'
+  const [dataChart, setDataChart] = useState(null)
   const [dados, setDados] = useState([
     ['Ano', 'Qtd.Emp', 'Qtd. Func'],
     ['2012', 8, 120],
@@ -50,11 +49,11 @@ export default function Dashboard(){
     ['2016', 17, 350]
 
   ])
-     
+       
   
   useEffect(() => {
-    async function loadGraficos(){          
-      
+    async function loadGraficos(){              
+           
       const q = query(listRef, orderBy('created','desc'), limit(5));
 
       const querySnapshot = await getDocs(q)
@@ -81,37 +80,33 @@ export default function Dashboard(){
 
       await querySnapshot.forEach((doc) => {
         lista.push({    
-          id: doc.id,
-          
-          companies: doc.data().companies,          
-          companiesId: doc.data().companies,          
-          complemento: doc.data().complemento,           
-          created: doc.data().created,
+          id: doc.id,                             
           createdFormat: format(doc.data().created.toDate(), 'dd/MM/yyyy'),          
-          dataCadastro: doc.data().dataCadastro,
-          dataCadastroFormat: format(new Date(doc.data().dataCadastro) , 'dd/MM/yyyy'),         
-          quantidade: doc.data().quantidade,          
-          status: doc.data().status,
+          anoCadastro: doc.data().anoCadastro,          
+          quantidadeEmpresas: doc.data().quantidadeEmpresas,          
+          quantidadeFuncionarios: doc.data().quantidadeFuncionarios,                    
           userId: doc.data().userId                                        
-        })
-        
-      })      
-      
-      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] // Pegando o ultimo item
-
-      const totalEmpresas = await getCountFromServer(listRef);
-      console.log('count: ', totalEmpresas.data().count);
+        })        
+      })
       
 
-     /*  const q = query(listRef, where("dataCadastro", "==", "2012"));
-      const snapshot = await getCountFromServer(q);
-      console.log('count: ', snapshot.data().count) */
+      let indice = Object.keys(lista[0])
+      console.log(indice)      
+      let values = Object.values(lista[0])
+      console.log(values)      
+      let data = []
 
-      const totalFuncionarios = await getAggregateFromServer(listRef, {
-        totalFunc: sum('quantidade')
-      });
+      for(let i = 0; i < values[0].length; ){
+        data[i] = values.map((item, index) =>{
+          return item[i]
+        })        
+      }
+
+      data.unshift(indice)
+      setDataChart(data)
+      console.log('LISTA GRAFICO: ', data)
       
-      console.log('totalFunc: ', totalFuncionarios.data().totalFunc);
+      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] // Pegando o ultimo item      
 
       setEmployees(employees => [...employees, ...lista])
       setLastDocs(lastDoc);
@@ -137,7 +132,7 @@ export default function Dashboard(){
   }
   
 
-  if(loading){
+  /* if(loading){
     return(
       <div>
         <Header/>
@@ -148,12 +143,12 @@ export default function Dashboard(){
           </Title>
 
           <div className='container dashboard'>
-            <span>Buscando Cadastros...</span>                               
+            <span>Buscando Cadastros...</span>
           </div>
         </div>
       </div>
     )
-  }
+  } */
 
   
   return(
@@ -275,43 +270,21 @@ export default function Dashboard(){
                   <thead>
                     <tr>
                       <th scope="col">Ano Cadastro</th>
-                      <th scope="col">Cursos</th>
-                      <th scope="col">Feito em</th>
-                      <th scope="col">Valido até</th>
-                      <th scope="col">Dias Restantes</th>
-                      <th scope="col">Status</th>                      
-                      <th scope="col">#</th>
+                      <th scope="col">Quantidade Empresas</th>
+                      <th scope="col">Quantidade Funcionarios</th>                      
+
                     </tr>
                   </thead>
                   <tbody>
                     {employees.map((item, index) => {
                       
                       return(
+                        
                         <tr key={index}>
-                          <td data-label="Motorista">{item.dataCadastro}</td>
-                          <td data-label="Assunto">{item.companies}</td>
-                          <td data-label="Data-Inicio">{item.quantidade}</td>
-                          <td data-label="Data-Final">{item.status}</td>
-                          <td data-label="Dias-Restantes">teste</td>                          
-                          
-                          <td data-label="Status">
-                          {item.diferencaDias >= 0 ? (
-                              <span className="badge" style={{ backgroundColor: '#5cb85c'} }>{item.status}</span>                            
-                            ):(
-                              <span className="badge" style={{ backgroundColor: '#999'}}>{item.status}</span>
-                            )
-                          }                           
-                            
-                          </td>                      
-                          <td data-label="#">
-                            <button className="action" style={{backgroundColor: '#3583f6' }} onClick={() => toggleModal(item)}>
-                                <FiSearch color="#FFF" size={17} />
-                            </button>
-                            <Link to={`/course/${item.id}`} className="action" style={{backgroundColor: '#F6a935' }}>
-                                <FiEdit2 color="#FFF" size={17} />
-                            </Link>
-                          </td>
-                        </tr>
+                          <td data-label="Motorista">{item.anoCadastro}</td>
+                          <td data-label="Assunto">{item.quantidadeEmpresas}</td>
+                          <td data-label="Data-Inicio">{item.quantidadeFuncionarios}</td>                                                                                                    
+                        </tr>                        
                       )  
 
                     })}
