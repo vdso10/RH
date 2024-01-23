@@ -75,11 +75,6 @@ export default function Dashboard(){
         
       })
 
-      let indice = Object.keys(lista[0])
-      console.log(indice)      
-      let values = Object.values(lista[0])
-      console.log(values)      
-      let data = []
       
       const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] // Pegando o ultimo item
 
@@ -151,34 +146,17 @@ export default function Dashboard(){
                 <div className="cardBox">
                   <div className="card">
                       <div>
-                        <div className="numbers">154</div>
-                        <div className="cardName">Total Empresas</div>
-                      </div>
-
-                      <div className="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                      </div>
+                        <div className="numbers">38</div>
+                        <div className="cardName">Total de Empresas</div>
+                      </div>                     
                   </div>
                   <div className="card">
                       <div>
-                          <div className="numbers">35</div>
-                          <div className="cardName">Empresa maior nº funcionarios</div>
-                      </div>
-
-                      <div className="iconBx">
-                          <ion-icon name="eye-outline"></ion-icon>
-                      </div>
+                          <div className="numbers">724</div>
+                          <div className="cardName">Total de Funcionários</div>
+                      </div>                      
                   </div>
-                  <div className="card">
-                      <div>
-                          <div className="numbers">12</div>
-                          <div className="cardName">Empresa menor nº funcionarios</div>
-                      </div>
-
-                      <div className="iconBx">
-                          <ion-icon name="eye-outline"></ion-icon>
-                      </div>
-                  </div>
+                  
                 </div> 
 
                 <div className='graficos container '>
@@ -186,7 +164,8 @@ export default function Dashboard(){
                   <DoughnutChart />
                   <PieChart />
                   <LineChart />
-                  <BarChart />
+                  <div style={{marginTop: '20px'}}><BarChart titulo='quantidade'/></div>
+                  
                   
                   
                 </div>  
@@ -202,7 +181,7 @@ export default function Dashboard(){
                       <th scope="col">Ano Cadastrado</th>
                       <th scope="col">Quantidade Empresas</th>
                       <th scope="col">Quantidade Funcionários</th>                                    
-                      <th scope="col">#</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -211,16 +190,7 @@ export default function Dashboard(){
                         <tr key={index}>
                           <td data-label="Motorista">{item.anoCadastro}</td>
                           <td data-label="Assunto">{item.quantidadeEmpresas}</td>
-                          <td data-label="Data-Inicio">{item.quantidadeFuncionarios}</td>                                                 
-
-                          <td data-label="#">
-                            <button className="action" style={{backgroundColor: '#3583f6' }} onClick={() => toggleModal(item)}>
-                                <FiSearch color="#FFF" size={17} />
-                            </button>
-                            <Link to={`/course/${item.id}`} className="action" style={{backgroundColor: '#F6a935' }}>
-                                <FiEdit2 color="#FFF" size={17} />
-                            </Link>
-                          </td>
+                          <td data-label="Data-Inicio">{item.quantidadeFuncionarios}</td>                                                                           
                         </tr>
                       )  
 

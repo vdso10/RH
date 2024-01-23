@@ -57,7 +57,7 @@ function AuthProvider({children}){
           storageUser(data)    
           setLoadingAuth(false)
           toast.success('Seja bem-vindo(a) ' + data.nome)
-          navigate('/dashboard')
+          navigate('/dashfuncionario')
           })
         .catch((error) =>{
           console.log(error)

@@ -87,21 +87,32 @@ const PieChart = () => {
       data: dados?.map(x => x.quantidadeEmpresas),
       data: dados?.map(x => x.quantidadeFuncionarios),
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'RGBA(121,215,252, 1)',
+        'RGBA(0,115,143,1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        '#FFD700',
+        '#3CB371',
+        'rgba(68, 4, 111, 1)',
+        'rgba(131, 2, 41, 0.85)',
+        'rgba(190, 165, 173, 1)',
+        'RGBA(0,135,234,1)'
+
       ],
       borderColor: [
-        'rgba(255, 99, 132, 1)',
+        'rgba(192, 143, 8, 1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
         'rgba(75, 192, 192, 1)',
         'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
+        'rgba(255, 159, 64, 1)',
+        '#FFD700',
+        '#3CB371',
+        'rgba(68, 4, 111, 1)',
+        'rgba(131, 2, 41, 0.85)',
+        'rgba(190, 165, 173, 1)'
       ],
       borderWidth: 1
     }]
@@ -117,22 +128,23 @@ const PieChart = () => {
       },
     },
     plugins: {
-      title: {
+      subtitle: {
           display: true,
           text: 'Custom Chart Title',
           padding: {
-              top: 10,
-              bottom: 30
+            top: 10,
+            bottom: 30
           }
       }
-    }
+    }  
   }
 
   return (
     <div>
       <Pie
+        title='Quantidade de Funcionarios / ano'
         data={data}
-        height={400}
+        height={300}
         width={500}
         options={options}
 

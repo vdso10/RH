@@ -9,15 +9,6 @@
 }
 
 .sidebar div{
-    background: url('../../assets/cover.png');
-    background-color: #181c2e;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 150px;
-}
-
-.sidebar div{
     padding-top: 30px;    
 } 
 

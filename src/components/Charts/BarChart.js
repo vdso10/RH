@@ -120,7 +120,7 @@ const BarChart = () => {
         'rgba(153, 102, 255, 1)',
         'rgba(255, 159, 64, 1)'
       ],
-      borderWidth: 1
+      borderWidth: 3
     },
   ]
     }
@@ -142,7 +142,7 @@ const BarChart = () => {
       
       <Bar
         data={data}
-        height={400}
+        height={300}
         width={1550}
         options={options}
 

@@ -17,15 +17,14 @@ export default function Header() {
                 <div>
                     <img src={user.avatarUrl === null ? avatar : user.avatarUrl} alt='Foto avatar' />
                 </div>
-                
-                <Link to='/dashboard'>
-                    <FiHome color='#FFF' size={24} />
-                    Cursos
-                </Link>
                 <Link to='/dashfuncionario'>
                     <FiMonitor color='#FFF' size={24} />
                     Dash Emp / Func
                 </Link>
+                <Link to='/dashboard'>
+                    <FiHome color='#FFF' size={24} />
+                    Cursos
+                </Link>                
                 <Link to='/employee'>
                     <FiUser color='#FFF' size={24} />
                     Funcionarios
